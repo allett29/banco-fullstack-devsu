@@ -1,0 +1,73 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f3f5f7;
+}
+
+.app-header {
+  background: #ffffff;
+  border-bottom: 1px solid #d7dde5;
+  padding: 1rem 1.5rem;
+}
+
+.brand {
+  color: #1a5fb4;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.sidebar {
+  width: 200px;
+  background: #ffffff;
+  border-right: 1px solid #d7dde5;
+  padding: 1.5rem 1rem;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sidebar a {
+  color: #2c3340;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+  color: #1a5fb4;
+  font-weight: 600;
+}
+
+.content {
+  flex: 1;
+  padding: 1.5rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .app-body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #d7dde5;
+  }
+
+  .sidebar nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

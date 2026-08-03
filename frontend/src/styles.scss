@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+  color: #1f2430;
+  background: #f3f5f7;
+}
+
+h1 {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.toolbar {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.toolbar input[type='search'],
+.toolbar input[type='text'],
+.toolbar input[type='number'],
+.toolbar input[type='date'],
+.toolbar select,
+.form-grid input,
+.form-grid select {
+  border: 1px solid #c5ced9;
+  border-radius: 4px;
+  padding: 0.55rem 0.75rem;
+  background: #fff;
+  min-width: 220px;
+}
+
+.btn {
+  border: 1px solid #1a5fb4;
+  background: #1a5fb4;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #154a8c;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #1a5fb4;
+}
+
+.btn-danger {
+  background: #b42318;
+  border-color: #b42318;
+}
+
+.btn-danger:hover {
+  background: #912018;
+}
+
+.table-wrap {
+  background: #fff;
+  border: 1px solid #d7dde5;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e9ef;
+  white-space: nowrap;
+}
+
+th {
+  background: #eef2f7;
+  font-weight: 600;
+}
+
+.form-card {
+  background: #fff;
+  border: 1px solid #d7dde5;
+  padding: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.error,
+.alert-error {
+  color: #b42318;
+  font-size: 0.9rem;
+}
+
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+}
+
+.alert-error {
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+}
+
+.alert-success {
+  background: #ecfdf3;
+  border: 1px solid #abefc6;
+  color: #067647;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.muted {
+  color: #667085;
+}

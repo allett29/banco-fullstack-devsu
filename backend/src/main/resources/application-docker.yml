@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/banco
+    username: banco
+    password: banco
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  sql:
+    init:
+      mode: never

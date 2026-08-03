@@ -1,0 +1,90 @@
+<section class="page">
+  <h1>Reportes</h1>
+
+  @if (mensajeError) {
+    <div class="alert alert-error">{{ mensajeError }}</div>
+  }
+
+  <form class="form-card" [formGroup]="form" (ngSubmit)="consultar()">
+    <h2>Estado de cuenta</h2>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Cliente</label>
+        <select formControlName="clienteId">
+          <option [ngValue]="null">Seleccione</option>
+          @for (cliente of clientes; track cliente.clienteId) {
+            <option [ngValue]="cliente.clienteId">{{ cliente.nombre }}</option>
+          }
+        </select>
+        @if (campoInvalido('clienteId')) {
+          <span class="error">Seleccione un cliente.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Fecha inicio</label>
+        <input type="date" formControlName="fechaInicio" />
+        @if (campoInvalido('fechaInicio')) {
+          <span class="error">La fecha inicio es obligatoria.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Fecha fin</label>
+        <input type="date" formControlName="fechaFin" />
+        @if (campoInvalido('fechaFin')) {
+          <span class="error">La fecha fin es obligatoria.</span>
+        }
+      </div>
+    </div>
+    <div class="toolbar" style="margin-top: 1rem">
+      <button class="btn" type="submit">Consultar</button>
+      @if (reporte?.pdfBase64) {
+        <button class="btn btn-secondary" type="button" (click)="descargarPdf()">
+          Descargar PDF
+        </button>
+      }
+    </div>
+  </form>
+
+  @if (reporte) {
+    <div class="form-card">
+      <p><strong>Cliente:</strong> {{ reporte.clienteNombre }}</p>
+      <p><strong>Total créditos:</strong> {{ reporte.totalCreditos }}</p>
+      <p><strong>Total débitos:</strong> {{ reporte.totalDebitos }}</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Numero Cuenta</th>
+            <th>Tipo</th>
+            <th>Saldo Inicial</th>
+            <th>Estado</th>
+            <th>Movimiento</th>
+            <th>Saldo Disponible</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of reporte.movimientos; track $index) {
+            <tr>
+              <td>{{ item.Fecha }}</td>
+              <td>{{ item.Cliente }}</td>
+              <td>{{ item['Numero Cuenta'] }}</td>
+              <td>{{ item.Tipo }}</td>
+              <td>{{ item['Saldo Inicial'] }}</td>
+              <td>{{ item.Estado }}</td>
+              <td>{{ item.Movimiento }}</td>
+              <td>{{ item['Saldo Disponible'] }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="8" class="muted">No hay movimientos en el rango seleccionado.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

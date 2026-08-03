@@ -1,0 +1,89 @@
+<section class="page">
+  <h1>Movimientos</h1>
+
+  @if (mensajeError) {
+    <div class="alert alert-error">{{ mensajeError }}</div>
+  }
+  @if (mensajeOk) {
+    <div class="alert alert-success">{{ mensajeOk }}</div>
+  }
+
+  <div class="toolbar">
+    <input
+      type="search"
+      placeholder="Buscar"
+      [value]="busqueda"
+      (input)="buscar(($any($event.target)).value)"
+    />
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Tipo</th>
+          <th>Valor</th>
+          <th>Saldo</th>
+          <th>Cuenta</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (movimiento of movimientos; track movimiento.id) {
+          <tr>
+            <td>{{ movimiento.fecha | date: 'short' }}</td>
+            <td>{{ movimiento.tipoMovimiento }}</td>
+            <td>{{ movimiento.valor }}</td>
+            <td>{{ movimiento.saldo }}</td>
+            <td>{{ movimiento.numeroCuenta }}</td>
+            <td class="actions">
+              <button class="btn btn-danger" type="button" (click)="eliminar(movimiento)">Eliminar</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="muted">No hay movimientos registrados.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <form class="form-card" [formGroup]="form" (ngSubmit)="guardar()">
+    <h2>Registrar movimiento</h2>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Tipo</label>
+        <select formControlName="tipoMovimiento">
+          <option value="CREDITO">Crédito / Depósito</option>
+          <option value="DEBITO">Débito / Retiro</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Valor</label>
+        <input type="number" formControlName="valor" />
+        @if (campoInvalido('valor')) {
+          <span class="error">Ingrese un valor válido.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Cuenta</label>
+        <select formControlName="cuentaId">
+          <option [ngValue]="null">Seleccione</option>
+          @for (cuenta of cuentas; track cuenta.id) {
+            <option [ngValue]="cuenta.id">
+              {{ cuenta.numeroCuenta }} - {{ cuenta.clienteNombre }} ({{ cuenta.saldoActual }})
+            </option>
+          }
+        </select>
+        @if (campoInvalido('cuentaId')) {
+          <span class="error">La cuenta es obligatoria.</span>
+        }
+      </div>
+    </div>
+    <div class="toolbar" style="margin-top: 1rem">
+      <button class="btn" type="submit">Guardar</button>
+    </div>
+  </form>
+</section>

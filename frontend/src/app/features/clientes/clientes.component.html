@@ -1,0 +1,122 @@
+<section class="page">
+  <h1>Clientes</h1>
+
+  @if (mensajeError) {
+    <div class="alert alert-error">{{ mensajeError }}</div>
+  }
+  @if (mensajeOk) {
+    <div class="alert alert-success">{{ mensajeOk }}</div>
+  }
+
+  <div class="toolbar">
+    <input
+      type="search"
+      placeholder="Buscar"
+      [value]="busqueda"
+      (input)="buscar(($any($event.target)).value)"
+    />
+    <button class="btn" type="button" (click)="cancelar()">Nuevo</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Identificación</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (cliente of clientes; track cliente.clienteId) {
+          <tr>
+            <td>{{ cliente.clienteId }}</td>
+            <td>{{ cliente.nombre }}</td>
+            <td>{{ cliente.identificacion }}</td>
+            <td>{{ cliente.telefono }}</td>
+            <td>{{ cliente.direccion }}</td>
+            <td>{{ cliente.estado ? 'Activo' : 'Inactivo' }}</td>
+            <td class="actions">
+              <button class="btn btn-secondary" type="button" (click)="editar(cliente)">Editar</button>
+              <button class="btn btn-danger" type="button" (click)="eliminar(cliente)">Eliminar</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="muted">No hay clientes registrados.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <form class="form-card" [formGroup]="form" (ngSubmit)="guardar()">
+    <h2>{{ editandoId ? 'Editar cliente' : 'Crear cliente' }}</h2>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Nombre</label>
+        <input formControlName="nombre" />
+        @if (campoInvalido('nombre')) {
+          <span class="error">El nombre es obligatorio.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Género</label>
+        <input formControlName="genero" />
+        @if (campoInvalido('genero')) {
+          <span class="error">El género es obligatorio.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Edad</label>
+        <input type="number" formControlName="edad" />
+        @if (campoInvalido('edad')) {
+          <span class="error">La edad es obligatoria.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Identificación</label>
+        <input formControlName="identificacion" />
+        @if (campoInvalido('identificacion')) {
+          <span class="error">La identificación es obligatoria.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Dirección</label>
+        <input formControlName="direccion" />
+        @if (campoInvalido('direccion')) {
+          <span class="error">La dirección es obligatoria.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Teléfono</label>
+        <input formControlName="telefono" />
+        @if (campoInvalido('telefono')) {
+          <span class="error">El teléfono es obligatorio.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Contraseña</label>
+        <input type="password" formControlName="contrasena" />
+        @if (campoInvalido('contrasena')) {
+          <span class="error">La contraseña es obligatoria.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Estado</label>
+        <select formControlName="estado">
+          <option [ngValue]="true">Activo</option>
+          <option [ngValue]="false">Inactivo</option>
+        </select>
+      </div>
+    </div>
+    <div class="toolbar" style="margin-top: 1rem">
+      <button class="btn" type="submit">Guardar</button>
+      <button class="btn btn-secondary" type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</section>

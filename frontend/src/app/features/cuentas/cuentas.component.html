@@ -1,0 +1,107 @@
+<section class="page">
+  <h1>Cuentas</h1>
+
+  @if (mensajeError) {
+    <div class="alert alert-error">{{ mensajeError }}</div>
+  }
+  @if (mensajeOk) {
+    <div class="alert alert-success">{{ mensajeOk }}</div>
+  }
+
+  <div class="toolbar">
+    <input
+      type="search"
+      placeholder="Buscar"
+      [value]="busqueda"
+      (input)="buscar(($any($event.target)).value)"
+    />
+    <button class="btn" type="button" (click)="cancelar()">Nueva</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Tipo</th>
+          <th>Saldo Inicial</th>
+          <th>Saldo Actual</th>
+          <th>Cliente</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (cuenta of cuentas; track cuenta.id) {
+          <tr>
+            <td>{{ cuenta.numeroCuenta }}</td>
+            <td>{{ cuenta.tipoCuenta }}</td>
+            <td>{{ cuenta.saldoInicial }}</td>
+            <td>{{ cuenta.saldoActual }}</td>
+            <td>{{ cuenta.clienteNombre }}</td>
+            <td>{{ cuenta.estado ? 'Activa' : 'Inactiva' }}</td>
+            <td class="actions">
+              <button class="btn btn-secondary" type="button" (click)="editar(cuenta)">Editar</button>
+              <button class="btn btn-danger" type="button" (click)="eliminar(cuenta)">Eliminar</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="muted">No hay cuentas registradas.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <form class="form-card" [formGroup]="form" (ngSubmit)="guardar()">
+    <h2>{{ editandoId ? 'Editar cuenta' : 'Crear cuenta' }}</h2>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Número de cuenta</label>
+        <input formControlName="numeroCuenta" />
+        @if (campoInvalido('numeroCuenta')) {
+          <span class="error">El número de cuenta es obligatorio.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Tipo</label>
+        <select formControlName="tipoCuenta">
+          <option value="Ahorro">Ahorro</option>
+          <option value="Ahorros">Ahorros</option>
+          <option value="Corriente">Corriente</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Saldo inicial</label>
+        <input type="number" formControlName="saldoInicial" />
+        @if (campoInvalido('saldoInicial')) {
+          <span class="error">El saldo inicial es obligatorio.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Cliente</label>
+        <select formControlName="clienteId">
+          <option [ngValue]="null">Seleccione</option>
+          @for (cliente of clientes; track cliente.clienteId) {
+            <option [ngValue]="cliente.clienteId">{{ cliente.nombre }}</option>
+          }
+        </select>
+        @if (campoInvalido('clienteId')) {
+          <span class="error">El cliente es obligatorio.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label>Estado</label>
+        <select formControlName="estado">
+          <option [ngValue]="true">Activa</option>
+          <option [ngValue]="false">Inactiva</option>
+        </select>
+      </div>
+    </div>
+    <div class="toolbar" style="margin-top: 1rem">
+      <button class="btn" type="submit">Guardar</button>
+      <button class="btn btn-secondary" type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</section>
