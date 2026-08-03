@@ -62,7 +62,7 @@ El reporte retorna JSON con totales de creditos/debitos, detalle de movimientos 
 
 ## Validacion con Postman
 
-1. Importar `postman/Banco_API.postman_collection.json`
+1. Importar `postman/Banco API - Full Stack.postman_collection.json`
 2. Configurar la variable `baseUrl` en `http://localhost:8080/api`
 3. Ejecutar las peticiones de la coleccion
 
